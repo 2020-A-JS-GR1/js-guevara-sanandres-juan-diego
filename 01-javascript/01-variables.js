@@ -13,7 +13,7 @@ const file_configuration = "PDF";
 //Variables Types
 const number = 4; //number
 const text = "COVID"; //string
-const bool = "False"; //boolean
+const bool = false; //boolean
 const love = null; //object
 const life = undefined; //undefined
 console.log(typeof number);
@@ -21,3 +21,45 @@ console.log(typeof text);
 console.log(typeof bool);
 console.log(typeof love);
 console.log(typeof life);
+
+if (true==true){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if (true==false){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if ("Todos flotan"){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if (""){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if (-1){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if (0){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if (1){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
