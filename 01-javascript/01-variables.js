@@ -1,6 +1,6 @@
 //Mutable
 
-let number_one = 1;
+var number_one = 1;
 let number_two = 2;
 
 number_one = 5;
@@ -22,6 +22,7 @@ console.log(typeof bool);
 console.log(typeof love);
 console.log(typeof life);
 
+//if/else Clauses
 if (true==true){
     console.log("Its True");
 }else {
@@ -63,3 +64,39 @@ if (1){
 }else {
     console.log("Its False");
 }
+
+if (undefined){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+if (null){
+    console.log("Its True");
+}else {
+    console.log("Its False");
+}
+
+//Order of importance
+//1. const
+//2. let
+//3. X -> "var"
+
+//Js object (JSON) - Arrays
+
+const juxx = {
+    name:"Juan", //key:value,
+    lastname:'Guevara',
+    age: 22,
+    inlove: false,
+    money: null,
+    sad: undefined,
+    girls: {
+      number:4,
+      cute: true,
+    },
+    pets: ['Chiquita','Lio','Jack'],
+}; //object
+const number_array = []; //object
+console.log(juxx);
+console.log(number_array);
