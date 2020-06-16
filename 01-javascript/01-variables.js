@@ -119,7 +119,7 @@ delete juxx.lastname;
 console.log(Object.keys(juxx));
 console.log(Object.values(juxx));
 
-//Value variables
+//Value variables: number,string,boolean, undefined
 let juan_age = 22;
 let diego_age = juan_age;
 console.log(juan_age);
@@ -128,7 +128,7 @@ juan_age = juan_age + 1;
 console.log(juan_age);
 console.log(diego_age);
 
-//Reference variables
+//Reference variables: objects, arrays, whatever is not value variables
 /*
 let abed = {
     name: "beldrea",
