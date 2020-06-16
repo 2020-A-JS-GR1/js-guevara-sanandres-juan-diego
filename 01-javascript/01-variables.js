@@ -97,6 +97,67 @@ const juxx = {
     },
     pets: ['Chiquita','Lio','Jack'],
 }; //object
+
+juxx.name;
+juxx.lastname;
+juxx['name'];
+console.log(juxx);
+juxx.name = "Diego";
+console.log(juxx);
+
+/*
+juxx.sueldo;
+console.log(juxx.sueldo);
+*/
+juxx.sueldo = 4.20;
+console.log(juxx.sueldo);
+juxx["gastos"] = 0.13;
+console.log(juxx.gastos);
+
+console.log(Object.keys(juxx));
+delete juxx.lastname;
+console.log(Object.keys(juxx));
+console.log(Object.values(juxx));
+
+//Value variables
+let juan_age = 22;
+let diego_age = juan_age;
+console.log(juan_age);
+console.log(diego_age);
+juan_age = juan_age + 1;
+console.log(juan_age);
+console.log(diego_age);
+
+//Reference variables
+/*
+let abed = {
+    name: "beldrea",
+};
+let dipal = abed;
+console.log(abed);
+console.log(dipal);
+dipal.name = "dipal";
+console.log(abed);
+console.log(dipal);
+delete abed.name;
+console.log(abed);
+console.log(dipal);
+*/
+
+let abed = {
+    name: "beldrea",
+};
+let dipal = Object.assign({},abed);
+console.log(abed);
+console.log(dipal);
+dipal.name = "dipal";
+console.log(abed);
+console.log(dipal);
+delete abed.name;
+console.log(abed);
+console.log(dipal);
+/*
 const number_array = []; //object
 console.log(juxx);
 console.log(number_array);
+*/
