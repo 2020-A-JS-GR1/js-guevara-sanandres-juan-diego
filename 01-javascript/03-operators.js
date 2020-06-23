@@ -117,3 +117,24 @@ const filter_response = array
         }
     );
 console.log('Filtro Notas', filter_response);
+
+//AND
+//EVERY
+const answer_every = array
+    .every(
+        (actual_value, index, whole_array)=>{
+            return actual_value.grade < 14;
+        }
+    );
+
+console.log('Respuesta Every', answer_every);
+//OR
+//Some grade less than 9? True or False
+const answer_some = array
+    .some(
+        (actual_value, index, whole_array)=>{
+            return actual_value.grade < 4;
+        }
+    );
+
+console.log('Respuesta Some', answer_some);
