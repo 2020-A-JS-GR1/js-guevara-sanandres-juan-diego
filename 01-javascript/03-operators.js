@@ -120,21 +120,42 @@ console.log('Filtro Notas', filter_response);
 
 //AND
 //EVERY
-const answer_every = array
+const every_response = array
     .every(
         (actual_value, index, whole_array)=>{
             return actual_value.grade < 14;
         }
     );
 
-console.log('Respuesta Every', answer_every);
+console.log('Respuesta Every', every_response);
 //OR
 //Some grade less than 9? True or False
-const answer_some = array
+const some_response = array
     .some(
         (actual_value, index, whole_array)=>{
             return actual_value.grade < 4;
         }
     );
 
-console.log('Respuesta Some', answer_some);
+console.log('Respuesta Some', some_response);
+
+//REDUCE left -> right
+//REDUCERIGTH right -> left
+
+const reduce_response = array
+    .reduce(
+        (accumulator_value, actual_value, index, whole_array)=>{
+            return accumulator_value - actual_value.grade;
+        },
+        500 // Accumulator
+    );
+console.log('Respuesta Reduce', reduce_response);
+
+const student_number_less_nine_array = array
+    .map((actual_value)=>actual_value.grade*1.3)
+    .filter((grade)=>grade < 9);
+const total_points = student_number_less_nine_array
+    .reduce((accumulator,actual) => accumulator + actual,0);
+const average_grade = total_points/student_number_less_nine_array.length;
+console.log('Nota Promedio', average_grade);
+
