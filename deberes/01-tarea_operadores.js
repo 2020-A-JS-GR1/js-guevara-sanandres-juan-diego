@@ -51,10 +51,11 @@ const array = [
     }
 ];
 
+const vowels= ['a','e','i','o','u'];
+
 const for_each_response = array
-    .forEach(
-        (actual_value, index, whole_array) => {
-            console.log(actual_value.name.split(""));
-        }
-    );
-console.log('For Each', for_each_response);
+    .forEach(actual_value => {
+        actual_value.name.split("").find(value => vowels.includes(value));
+        console.log(actual_value.name,found);
+    });
+
