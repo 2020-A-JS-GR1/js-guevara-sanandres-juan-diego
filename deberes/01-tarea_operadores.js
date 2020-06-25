@@ -47,7 +47,7 @@ const array = [
     {
         id: 10,
         name: 'zacron',
-        grade: 4,
+        grade: 5,
     }
 ];
 
