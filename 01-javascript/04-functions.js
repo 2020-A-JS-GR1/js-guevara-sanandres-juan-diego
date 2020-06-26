@@ -32,3 +32,13 @@ function add_numbers(initial_number, ...other_number) {//INFINITE PARAMETERS
         .reduce((accumulator,value) => accumulator+value,0);
 }
 console.log(add_numbers(23, 1,2,3,4,6,7,89,0));
+
+const array = [1,5,6,7,8,9];
+function good_practice(array) {
+    const clon_array = Object.assign([],array); //The best practice
+    clon_array[0] = 100;
+    return clon_array;
+}
+
+console.log(good_practice(array));
+console.log('Arreglo', array);
