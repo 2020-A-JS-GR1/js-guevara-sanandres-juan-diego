@@ -52,6 +52,7 @@ const array = [
 ];
 
 const vowels= ['a','e','i','o','u'];
+
 const passed_students = array
     .map(actual_value => {
         const new_element = {
