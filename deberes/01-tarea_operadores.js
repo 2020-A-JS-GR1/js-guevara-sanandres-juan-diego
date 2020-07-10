@@ -52,10 +52,17 @@ const array = [
 ];
 
 const vowels= ['a','e','i','o','u'];
+const passed_students = array
+    .map(actual_value => {
+        const new_element = {
+            id: actual_value.id,
+            name: actual_value.name,
+            grade: actual_value.grade,
+        };
+        actual_value.name.split("").forEach(value =>{
+            vowels.includes(value) ? new_element.grade += 0.1 : new_element.grade +=0.05;
+        });
+        return new_element;
+    }).filter(value => value.grade > 9);
 
-const for_each_response = array
-    .forEach(actual_value => {
-        actual_value.name.split("").find(value => vowels.includes(value));
-        console.log(actual_value.name,found);
-    });
-
+console.log(passed_students);
