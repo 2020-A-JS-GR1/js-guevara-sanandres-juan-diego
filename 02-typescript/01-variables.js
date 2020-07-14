@@ -1,0 +1,15 @@
+let username = 'Juan';
+//nombre = 1;
+username = 'Diego';
+let age = 22;
+let tired = false;
+let date = new Date();
+let salary;
+salary = 23.56;
+let marijuana = 2;
+marijuana = 'pipos';
+marijuana = true;
+marijuana = () => '2';
+let multiple_age = 2;
+multiple_age = 'dos';
+multiple_age = 404;
