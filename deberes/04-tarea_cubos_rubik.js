@@ -30,8 +30,12 @@ function promise_write_file (path, add_content){
 }
 
 function createNewId(rubik_types){
-    const newId = parseInt(rubik_types[rubik_types.length - 1].id) + 1;
-    return newId.toString().padStart(3, '0');
+    try {
+        const newId = parseInt(rubik_types[rubik_types.length - 1].id) + 1;
+        return newId.toString().padStart(3, '0');
+    }catch (e) {
+        return '001'
+    }
 }
 
 async function main (){
@@ -73,6 +77,9 @@ async function main (){
                     const squares_ids = square_type.squares.map(
                         actual_value => {return actual_value.id}
                     );
+                    const type_index = rubik_types.findIndex(
+                        actual_value => {return actual_value.id === square_type.id;}
+                    );
                     console.log('ID: ', square_type.id);
                     console.log('Nombre: ', square_type.name);
                     console.log('Región de popularidad: ', square_type.region);
@@ -104,6 +111,57 @@ async function main (){
                                 square_menu_option = option_selected.menu_option;
                                 switch (square_menu_option) {
                                     case "Crear cubo":
+                                        console.log('Crear cubo');
+                                        let square_information = await inquirer.prompt([
+                                            {
+                                                type: 'input',
+                                                name: 'price',
+                                                message: 'Precio del cubo',
+                                                validate: function (value) {
+                                                    let pass = value.match(/^[0-9]+\.[0-9]+$/);
+                                                    if(pass){
+                                                        return true;
+                                                    }
+                                                    return 'Por favor ingrese un número válido Ejemplo: 23.05'
+                                                }
+                                            },
+                                            {
+                                                type: 'input',
+                                                name: 'brand',
+                                                message: 'Marca del cubo',
+                                            },
+                                            {
+                                                type: 'list',
+                                                name: 'dessign',
+                                                message: '¿Qué diseño le gustaría?',
+                                                choices: ['Orginal','Personalizado'],
+                                            },
+                                            {
+                                                type: 'checkbox',
+                                                name: 'media_option',
+                                                message: 'Escoja una o varias opciones con la barra espaciadora',
+                                                choices: ['Amazon','OLX','Mercado Libre'],
+                                            },
+                                            {
+                                                type: 'confirm',
+                                                name: 'confirm_square',
+                                                message: '¿Desea registrar los datos ingresados?',
+                                                default: false
+                                            }
+                                        ]);
+                                        let confirmation = square_information.confirm_square;
+                                        if(confirmation === true){
+                                            rubik_types[type_index].squares.push({
+                                                id: createNewId(list_squares),
+                                                price: square_information.price,
+                                                brand: square_information.brand,
+                                                dessign: square_information.dessign,
+                                                media: square_information.media_option,
+                                            });
+                                        }else{
+                                            console.log('Se canceló la creación');
+                                        }
+                                        await promise_write_file('./cubos_rubik.txt', JSON.stringify(rubik_types));
                                         break;
                                     case "Menu Principal":
                                         break;
@@ -127,8 +185,22 @@ async function main (){
                                         ]);
                                         switch (square_options.square_option) {
                                             case 'Borrar cubo':
+                                                const square_to_delete_index = list_squares.findIndex(
+                                                    actual_value => {return actual_value.id === square.id;}
+                                                );
+                                                rubik_types[type_index].squares.splice(square_to_delete_index);
+                                                console.log('Cubo eliminado exitosamente');
+                                                await promise_write_file('./cubos_rubik.txt', JSON.stringify(rubik_types));
                                                 break;
                                             case 'Editar cubo':
+                                                const square_to_edit = list_squares.find(
+                                                    actual_value => {return actual_value.id === square.id;}
+                                                );
+                                                const square_to_index = list_squares.findIndex(
+                                                    actual_value => {return actual_value.id === square.id;}
+                                                );
+
+
                                                 break;
                                         }
                                         break;
@@ -137,9 +209,6 @@ async function main (){
                             break;
                         case 'Editar tipo':
                             const type_to_edit = rubik_types.find(
-                                actual_value => {return actual_value.id === square_type.id;}
-                            );
-                            const type_index = rubik_types.findIndex(
                                 actual_value => {return actual_value.id === square_type.id;}
                             );
                             let answer = false;
