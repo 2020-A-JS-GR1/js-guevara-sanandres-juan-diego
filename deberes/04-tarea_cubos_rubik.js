@@ -41,7 +41,7 @@ async function main (){
                     type: 'list',
                     name: 'option',
                     message: 'Opciones de Objeto',
-                    choices: ['Ver Tipos','Tipos de cubo de Rubik','Salir'],
+                    choices: ['Ver Tipos','Crear Tipo','Salir'],
                 },
             ]);
             main_menu_option = option_selected.option;
@@ -53,29 +53,69 @@ async function main (){
                             name: 'type_option',
                             message: 'Escoge un tipo de cubo de Rubik',
                             choices: rubik_types.map(
-                                actual_value => {return actual_value.id}
+                                actual_value => {return actual_value.name}
                             ),
                         },
                     ]);
                     const square_type = rubik_types.find(
-                        actual_value => {return actual_value.id === type_selected.type_option}
+                        actual_value => {return actual_value.name === type_selected.type_option;}
                     );
-                    
-
-                case 'Tipos de cubo de Rubik':
-                    switch (await function_select()) {
-                        case 'Crear':
-                            console.log('Crear');
-                            break;
-                        case 'Actualizar':
-                            console.log('Actualizar');
-                            break;
-                        case 'Eliminar':
-                            console.log('Eliminar');
-                            break;
-                        case 'Menú Principal':
+                    const list_squares = square_type.squares.map(
+                        actual_value => {return actual_value}
+                    );
+                    const squares_ids = square_type.squares.map(
+                        actual_value => {return actual_value.id}
+                    );
+                    console.log('ID: ', square_type.id);
+                    console.log('Nombre: ', square_type.name);
+                    console.log('Region de venta: ', square_type.region);
+                    console.log('Se usa en competencias profesionales: ', square_type.professional);
+                    console.log('Calificación: ', square_type.rating);
+                    let type_options = await inquirer.prompt([
+                        {
+                            type: 'list',
+                            name: 'type_options',
+                            message: 'Opciones para tipo',
+                            choices: ['Ver cubos', 'Editar tipo', 'Borrar tipo'],
+                            loop: false
+                        }
+                    ]);
+                    clear();
+                    switch (type_options.type_options) {
+                        case 'Ver cubos':
+                            let square_menu_option = '';
+                            while (square_menu_option!=="Menu Principal"){
+                                option_selected = await inquirer.prompt([
+                                    {
+                                        type: 'list',
+                                        name: 'menu_option',
+                                        message: 'Terrain Plants',
+                                        choices: ['Crear cubo', 'Menu Principal'].concat(squares_ids)
+                                    }
+                                ]);
+                                clear();
+                                square_menu_option = option_selected.menu_option;
+                                switch (square_menu_option) {
+                                    case "Crear cubo":
+                                        break;
+                                    case "Menu Principal":
+                                        break;
+                                    default:
+                                        const square = list_squares.find(
+                                            actual_value => {return actual_value.id === option_selected.menu_option;}
+                                        );
+                                        console.log('ID: ', square.id);
+                                        console.log('Precio: ', square.price);
+                                        console.log('Marca', square.brand);
+                                        console.log('Diseño', square.dessign);
+                                        console.log('Plataformas de obtención', square.media);
+                                        break;
+                                }
+                            }
                             break;
                     }
+                    break;
+                case 'Crear Tipo':
                     break;
                 case 'Salir':
                     break;
