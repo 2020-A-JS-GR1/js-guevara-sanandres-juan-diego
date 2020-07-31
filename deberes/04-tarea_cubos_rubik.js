@@ -72,10 +72,10 @@ async function main (){
                         actual_value => {return actual_value.name === type_selected.type_option;}
                     );
                     const list_squares = square_type.squares.map(
-                        actual_value => {return actual_value}
+                        actual_value => {return actual_value;}
                     );
                     const squares_ids = square_type.squares.map(
-                        actual_value => {return actual_value.id}
+                        actual_value => {return actual_value.id;}
                     );
                     const type_index = rubik_types.findIndex(
                         actual_value => {return actual_value.id === square_type.id;}
@@ -103,7 +103,7 @@ async function main (){
                                     {
                                         type: 'list',
                                         name: 'menu_option',
-                                        message: 'Terrain Plants',
+                                        message: 'Escoja una opción',
                                         choices: ['Crear cubo', 'Menu Principal'].concat(squares_ids)
                                     }
                                 ]);
@@ -199,6 +199,90 @@ async function main (){
                                                 const square_to_index = list_squares.findIndex(
                                                     actual_value => {return actual_value.id === square.id;}
                                                 );
+                                                let answer = false;
+                                                while (answer!==true){
+                                                    const attribute_options = Object.keys(square_to_edit);
+                                                    attribute_options.splice(0,1);
+                                                    let edit_square_option = await inquirer.prompt([
+                                                        {
+                                                            type: 'list',
+                                                            name: 'edit_option',
+                                                            message: 'Seleccione que desea editar',
+                                                            choices: attribute_options.concat('Finalizar'),
+                                                            loop: false
+                                                        }
+                                                    ]);
+                                                    console.log(edit_square_option.edit_option);
+                                                    switch (edit_square_option.edit_option) {
+                                                        case 'price':
+                                                            let price_answer = await inquirer.prompt([
+                                                                {
+                                                                    type: 'input',
+                                                                    name: 'price',
+                                                                    message: 'Precio del cubo',
+                                                                    validate: function (value) {
+                                                                        let pass = value.match(/^[0-9]+\.[0-9]+$/);
+                                                                        if(pass){
+                                                                            return true;
+                                                                        }
+                                                                        return 'Por favor ingrese un número válido Ejemplo: 23.05'
+                                                                    }
+                                                                },
+                                                            ]);
+                                                            square_to_edit.price = price_answer.price;
+                                                            break;
+                                                        case 'brand':
+                                                            let brand_answer = await inquirer.prompt([
+                                                                {
+                                                                    type: 'input',
+                                                                    name: 'brand',
+                                                                    message: 'Marca del cubo',
+                                                                },
+                                                            ]);
+                                                            square_to_edit.brand = brand_answer.brand;
+                                                            break;
+                                                        case 'dessign':
+                                                            let dessgn_answer = await inquirer.prompt([
+                                                                {
+                                                                    type: 'list',
+                                                                    name: 'dessign',
+                                                                    message: '¿Qué diseño le gustaría?',
+                                                                    choices: ['Orginal','Personalizado'],
+                                                                },
+                                                            ]);
+                                                            square_to_edit.dessign = dessgn_answer.dessign;
+                                                            break;
+                                                        case 'media':
+                                                            let media_answer = await inquirer.prompt([
+                                                                {
+                                                                    type: 'checkbox',
+                                                                    name: 'media_option',
+                                                                    message: 'Escoja una o varias opciones con la barra espaciadora',
+                                                                    choices: ['Amazon','OLX','Mercado Libre'],
+                                                                },
+                                                            ]);
+                                                            square_to_edit.media = media_answer.media_option;
+                                                            break;
+                                                        case 'Finalizar':
+                                                            let confirmation = await inquirer.prompt([
+                                                                {
+                                                                    type: 'confirm',
+                                                                    name: 'confirm_type',
+                                                                    message: '¿Desea registrar los datos ingresados?',
+                                                                    default: false
+                                                                }
+                                                            ]);
+                                                            if (confirmation.confirm_type) {
+                                                                rubik_types[type_index].squares[square_to_index] = square_to_edit;
+                                                                console.log('Cubo editado exitosamente');
+                                                                await promise_write_file('./cubos_rubik.txt', JSON.stringify(rubik_types));
+                                                                answer = true;
+                                                            } else {
+                                                                console.log('Se canceló la edición');
+                                                            }
+                                                            break;
+                                                    }
+                                                }
 
 
                                                 break;
@@ -281,6 +365,7 @@ async function main (){
                                         ]);
                                         if (confirmation.confirm_type) {
                                             rubik_types[type_index] = type_to_edit;
+                                            console.log('Tipo de cubo editado exitosamente');
                                             await promise_write_file('./cubos_rubik.txt', JSON.stringify(rubik_types));
                                             answer = true;
                                         } else {
@@ -357,18 +442,3 @@ async function main (){
     }
 }
 
-async function function_select() {
-
-    const option_selected = await inquirer.prompt([
-        {
-            type: 'list',
-            name: 'option_crud',
-            message: 'Opciones para CRUD',
-            choices: ['Crear','Actualizar','Eliminar','Menú Principal'],
-        },
-    ]);
-
-    return option_selected.option_crud;
-}
-
-main();
